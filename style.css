@@ -3,23 +3,34 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+	flex-direction: column;
     height: 100vh;
     margin: 0;
     background-color: #1a1a1a;
-    color: #fff;
+	color: #0d3d65;
 }
 
 .container {
     text-align: center;
+	/* border: 3px solid red; */
+	/* border-radius: 2em; */
 }
 
 h1 {
     font-size: 2em;
     margin-bottom: 20px;
 }
-
+#message-success {
+	color: #4caf50;
+}
+#message-error{
+	color: #d70000;
+}
+#message-warn {
+	color: #d75f00;
+}
 p {
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 input {
@@ -28,7 +39,9 @@ input {
     font-size: 1em;
     font-family: 'Press Start 2P', cursive;
 }
-
+input, button{
+	border-radius: 12px;
+}
 button {
     margin-top: 10px;
     padding: 5px 10px;
