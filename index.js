@@ -1,7 +1,7 @@
 // Generate a randiom number between 1 and 10
 const targetNumber = Math.floor(Math.random() * 10) + 1;
 const guessInput = document.getElementById('guessInput');
-const submitButton = document.querySelector('button');
+const submitButton = document.querySelectorAll('button')[1];
 const messageBox = document.getElementById('message');
 const hintBox = document.getElementById('hint-message');
 const scoreBox = document.getElementById('score');
