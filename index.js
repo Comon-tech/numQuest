@@ -178,5 +178,7 @@ function playRandomBackgroundTrack() {
   }
 }
 
-// Call the function to play a random background track when the page loads
-playRandomBackgroundTrack();
+window.addEventListener('load', () => {
+  // Play a random background track when the page loads
+  playRandomBackgroundTrack();
+});	
