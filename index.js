@@ -38,7 +38,7 @@ function decrementTimer() {
     }
 
     // Play the tick sound when the timer is decremented
-    const tickSound = new Audio('audioTracks/tick_time_sound.mp3'); // Replace with the correct path
+    const tickSound = new Audio('audioTracks/tick_time_sound.mp3');
     tickSound.play();
   }
 }
@@ -145,7 +145,7 @@ function endGame() {
   game_over = true;
 
   // Play the tick sound when the game ends
-  const endGameSound = new Audio('audioTracks/tick_time_sound.mp3'); // Replace with the correct path
+  const endGameSound = new Audio('audioTracks/tick_time_sound.mp3');
   endGameSound.play();
 }
 
