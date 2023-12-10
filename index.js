@@ -1,6 +1,3 @@
-window.addEventListener('load', () => {
-
-alert('Welcome to the Guessing Game!');
 
 
 	// Generate a randiom number between 1 and 10
@@ -10,7 +7,28 @@ const submitButton = document.querySelector('button');
 const messageBox = document.getElementById('message');
 const hintBox = document.getElementById('hint-message');
 const scoreBox = document.getElementById('score');
+const backgroundMusicContainer = document.getElementById('backgroundMusic')
 // const timeBox = document.getElementById('time');
+
+// Audio elements
+const correctSound = new Audio('audioTracks/success-sound.mp3'); // Replace 'correct.mp3' with your sound file
+const wrongSound = new Audio('audioTracks/wrong.mp3'); // Replace 'wrong.mp3' with your sound file
+const clickSound = new Audio('audioTracks/click.mp3'); // Replace 'wrong.mp3' with your sound file
+
+function playCorrectSound() {
+  correctSound.play();
+}
+function playClickSound() {
+	clickSound.play();
+  }
+  
+function playWrongSound() {
+  wrongSound.play();
+}
+
+
+
+
 let attempts = 0;
 // scoreBox.innerText = score;
 
@@ -22,7 +40,7 @@ scoreBox.innerText = scoreState.getValue();
 
 
 function checkGuess() {
-
+	playClickSound()
 // plyer's guess
 const playerGuess = guessInput.value;
 
@@ -36,12 +54,13 @@ const playerGuess = guessInput.value;
         displayHint('YAAAY!!');
 		disableInput();
 		awardPoints()
-		
+		playCorrectSound()
 
 	} else 	if (playerGuess  < targetNumber){
 		messageBox.id = 'message-error'
 		displayMessage(`Wrong guess. Try again.`);
 		displayHint('Hint~> Try a higher number.');
+		wrongSound.play()
 
 		  // Update the score with a callback to immediately reflect the change
   scoreState.setValue(scoreState.getValue() - 10, updatedScore => {
@@ -53,6 +72,7 @@ const playerGuess = guessInput.value;
 		messageBox.id = 'message-error'
 		displayMessage(`Wrong guess. Try again.`);
         displayHint('hint~> Try a lower number.');
+		wrongSound.play()
 
 		  // Update the score with a callback to immediately reflect the change
   scoreState.setValue(scoreState.getValue() - 10, updatedScore => {
@@ -133,4 +153,30 @@ function createState(initialValue) {
   }
 
 
-})
+  //background music
+
+// Audio elements for background music
+const backgroundTracks = ['audioTracks/lady-of-the-80.mp3', 'audioTracks/digital-love.mp3', 'audioTracks/a-hero-of-the-80.mp3', 'audioTracks/stranger-things.mp3']; // Add paths to your audio files
+let currentBackgroundTrack;
+
+function playRandomBackgroundTrack() {
+  // Select a random track from the array
+  const randomIndex = Math.floor(Math.random() * backgroundTracks.length);
+  const randomTrack = backgroundTracks[randomIndex];
+
+  // Ensure that the selected track is different from the current one
+  if (currentBackgroundTrack !== randomTrack) {
+    // Update the current background track
+    currentBackgroundTrack = randomTrack;
+
+    // Set the new track and play it
+    backgroundMusicContainer.src = currentBackgroundTrack;
+    backgroundMusicContainer.play();
+  } else {
+    // If the selected track is the same as the current one, recursively call the function again
+    playRandomBackgroundTrack();
+  }
+}
+
+// Call the function to play a random background track when the page loads
+playRandomBackgroundTrack();
