@@ -1,5 +1,3 @@
-// Generate a randiom number between 1 and 10
-const targetNumber = Math.floor(Math.random() * 10) + 1;
 const guessInput = document.getElementById('guessInput');
 const submitButton = document.querySelectorAll('button')[1];
 const messageBox = document.getElementById('message');
@@ -22,12 +20,12 @@ function updateTimer() {
 function decrementTimer() {
   // If the game is over, don't decrement the timer
   if (game_over) {
-	return;
+    return;
   }
   
   if (attempts > 0) { // Check if the game has started
     timerSeconds--;
-
+    
     // Check if time is up
     if (timerSeconds <= 0) {
       endGame(); // Call the endGame function when the time is up
@@ -36,7 +34,7 @@ function decrementTimer() {
       updateTimer();
       setTimeout(decrementTimer, 1000);
     }
-
+    
     // Play the tick sound when the timer is decremented
     const tickSound = new Audio('audioTracks/tick_time_sound.mp3');
     tickSound.play();
@@ -45,6 +43,11 @@ function decrementTimer() {
 
 // Add this line at the end of the 'resetGame' function to reset the timer
 timerSeconds = 60;
+
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 10) + 1;
+}
+let targetNumber;
 
 // Audio elements
 const correctSound = new Audio('audioTracks/success-sound.mp3'); // Replace 'correct.mp3' with your sound file
@@ -81,6 +84,8 @@ function checkGuess() {
 
   if (attempts === 1) {
     decrementTimer(); // Start the timer on the first guess
+    targetNumber = generateRandomNumber(); // Generate a random number at the start of the game
+    console.log(targetNumber);
   }
 
   //check if the guess is correct
