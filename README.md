@@ -27,7 +27,7 @@ No special setup is required. Simply open the `index.html` file in a web browser
 
 ## Credits
 
-- Background music and sound effects obtained from (Pixabay)[https://pixabay.com/sound-effects/].
+- Background music and sound effects obtained from [https://pixabay.com/sound-effects/](Pixabay).
 - Shake animation inspired by chatGpt.
 
 ## License
