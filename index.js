@@ -47,7 +47,6 @@ timerSeconds = 60;
 function generateRandomNumber() {
   return Math.floor(Math.random() * 10) + 1;
 }
-// Generate a randiom number between 1 and 10
 let targetNumber;
 
 // Audio elements
