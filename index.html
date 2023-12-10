@@ -24,6 +24,21 @@
 		<!-- Add this element to display the timer -->
 		<p id="timer">Time left: <span id="time">60s</span></p>
 
+		<!-- Settings -->
+		<button onclick="toggleSettings()" id="settings-toggle">Show / Hide Settings</button>
+		<div class="settings">
+			<div id="settings" class="settings-content">
+				<h2>Settings</h2>
+				<div class="settings-row">
+					<label for="range_">Number guessing range:</label>
+					<input type="number" id="range_" value="1" min="1" max="100">
+					<input type="number" id="range" value="10" min="1" max="100">
+				</div>
+				<div class="settings-row">
+					<button onclick="saveSettings()" id="savesettings">Apply</button>
+				</div>
+			</div>
+
 
 		<!--  audio element for background music -->
 		<audio id="backgroundMusic" autoplay loop></audio>

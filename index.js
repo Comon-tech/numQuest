@@ -1,12 +1,40 @@
 // Generate a randiom number between 1 and 10
-const targetNumber = Math.floor(Math.random() * 10) + 1;
+let targetNumber = Math.floor(Math.random() * 10) + 1;
 const guessInput = document.getElementById('guessInput');
 const submitButton = document.querySelectorAll('button')[1];
 const messageBox = document.getElementById('message');
 const hintBox = document.getElementById('hint-message');
 const scoreBox = document.getElementById('score');
 const backgroundMusicContainer = document.getElementById('backgroundMusic');
+const settingsToggle = document.getElementById('settings-toggle');
+const settingsContainer = document.getElementById('settings');
+const range1 = document.getElementById('range_');
+const range2 = document.getElementById('range');
+const applySettingsButton = document.getElementById('savesettings');
 // const timeBox = document.getElementById('time');
+
+function regenerateVar() {
+    // Generate the random number based on the range selected by the user
+    const min = parseInt(range1.value);
+    const max = parseInt(range2.value);
+    // If range1 is equal to range2, alert the user and exit the function
+    if (min === max) {
+      alert('Please select different values for the range.');
+      return;
+    }
+    // If any of the values are empty or invalid, alert the user and exit the function
+    if (isNaN(min) || isNaN(max)) {
+      alert('Please enter valid values for the range.');
+      return;
+    }
+    // If range2 is less than range1, swap the values
+    if (max < min) {
+      range1.value = max;
+      range2.value = min;
+    }
+    // Generate a random number between the two values
+    targetNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 // Add these variables at the beginning of your JavaScript code
 const timerElement = document.getElementById('time');
@@ -125,14 +153,18 @@ function checkGuess() {
 
 function resetGame() {
   // Reset the game by setting all values back to their defaults
+  regenerateVar();
   attempts = 0;
+  timerSeconds = 60;
   score = 100;
   // targetNumber = Math.floor(Math.random() * 10) + 1;
   guessInput.value = '';
   guessInput.disabled = false;
   submitButton.disabled = false;
   game_over = false;
-  // messageBox.innerText = '';
+  messageBox.innerText = 'Guess a number between 1 and 10';
+  messageBox.id = 'message';
+  timerElement.innerText = timerSeconds + 's';
   hintBox.innerText = '';
   scoreBox.innerText = score;
   // alert('Game reset. Try again!');
@@ -219,7 +251,26 @@ function playRandomBackgroundTrack() {
   }
 }
 
-// window.addEventListener('load', () => {
+function toggleSettings() {
+  // Toggle the visibility of the settings container
+  settingsContainer.classList.toggle('hidden');
+}
+
+applySettingsButton.addEventListener('click', () => {
+  regenerateVar();
+  applySettingsButton.style.backgroundColor = '#7bd87e';
+  resetGame();
+  // wait 1 second and then set the background color back to the default
+  setTimeout(() => {
+    applySettingsButton.style.backgroundColor = '#4caf50';
+  }, 1000);
+});
+
+window.addEventListener('load', () => {
   // Play a random background track when the page loads
-  // playRandomBackgroundTrack();
-// });
+  // Wait for the user to interact with the page before playing the track
+  window.addEventListener('click', () => {
+    playRandomBackgroundTrack();
+    window.removeEventListener('click', playRandomBackgroundTrack);
+  });
+});
