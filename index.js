@@ -113,12 +113,6 @@ function checkGuess() {
   //increment the attemots 
   attempts++;
 
-  if (attempts === 1) {
-    decrementTimer(); // Start the timer on the first guess
-    targetNumber = regenerateVar();
-    console.log(targetNumber);
-  }
-
   //check if the guess is correct
   if (playerGuess == targetNumber) {
     messageBox.id = 'message-success';
@@ -178,6 +172,8 @@ function resetGame() {
   hintBox.innerText = '';
   scoreBox.innerText = score;
   // alert('Game reset. Try again!');
+
+  decrementTimer(); // Start the timer on the first guess
 }
 resetButton.addEventListener('click', resetGame);
 
@@ -260,7 +256,7 @@ applySettingsButton.addEventListener('click', () => {
 
 
   
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   // Play a random background track when the page loads
   // backgroundMusicPlayer.playRandomTrack();
   settingsContainer.classList.add('hidden');
@@ -269,4 +265,6 @@ window.addEventListener('load', () => {
     backgroundMusicPlayer.playRandomTrack();
   });
   
+  // Reset the game
+  resetGame();
 });
