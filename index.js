@@ -19,9 +19,10 @@ function regenerateVar() {
     // Generate the random number based on the range selected by the user
     const min = parseInt(range1.value);
     const max = parseInt(range2.value);
+
     // If range1 is equal to range2, alert the user and exit the function
     if (min === max) {
-      alert('Please select different values for the range.');
+      alert('The range values cannot be same.');
       return;
     }
     // If any of the values are empty or invalid, alert the user and exit the function
@@ -31,9 +32,18 @@ function regenerateVar() {
     }
     // If range2 is less than range1, swap the values
     if (max < min) {
+      alert('Range1 is less than Range2. Swapping the values.');
       range1.value = max;
       range2.value = min;
     }
+
+    //update the message box
+    messageBox.innerText = `Guess a number between ${min} and ${max}`;
+
+    // guessInput minimum and maximum values
+    guessInput.min = min;
+    guessInput.max = max;
+    
     // Generate a random number between the two values
     targetNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -266,13 +276,13 @@ function toggleSettings() {
 }
 
 applySettingsButton.addEventListener('click', () => {
-  regenerateVar();
   applySettingsButton.style.backgroundColor = '#7bd87e';
-  resetGame();
   // wait 1 second and then set the background color back to the default
   setTimeout(() => {
     applySettingsButton.style.backgroundColor = '#4caf50';
   }, 1000);
+  resetGame();
+  regenerateVar();
 });
 
 
