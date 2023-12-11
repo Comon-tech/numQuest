@@ -36,9 +36,9 @@ function regenerateVar() {
       alert('Please enter valid values for the range.');
       return;
     }
-    // If range2 is less than range1, swap the values
+    // If range2 is < than range1, swap the values
     if (max < min) {
-      alert('Range1 is less than Range2. Swapping the values.');
+      alert('Range2 is less than Range1. Swapping the values.');
       range1.value = max;
       range2.value = min;
     }
@@ -51,7 +51,8 @@ function regenerateVar() {
     guessInput.max = max;
     
     // Generate a random number between the two values
-    targetNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    let _targetNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    return _targetNumber;
 }
 
 // Add these variables at the beginning of your JavaScript code
@@ -91,10 +92,7 @@ async function decrementTimer() {
 // Add this line at the end of the 'resetGame' function to reset the timer
 timerSeconds = 60;
 
-function generateRandomNumber() {
-  return Math.floor(Math.random() * 10) + 1;
-}
-let targetNumber;
+let targetNumber = regenerateVar();
 
 let attempts = 0;
 // scoreBox.innerText = score;
@@ -117,7 +115,7 @@ function checkGuess() {
 
   if (attempts === 1) {
     decrementTimer(); // Start the timer on the first guess
-    targetNumber = generateRandomNumber(); // Generate a random number at the start of the game
+    targetNumber = regenerateVar();
     console.log(targetNumber);
   }
 
@@ -165,7 +163,7 @@ checkGuessButton.addEventListener('click', ()=>{checkGuess()});
 
 function resetGame() {
   // Reset the game by setting all values back to their defaults
-  regenerateVar();
+  targetNumber = regenerateVar();
   attempts = 0;
   timerSeconds = 60;
   let score = 100;
@@ -251,7 +249,7 @@ applySettingsButton.addEventListener('click', () => {
     applySettingsButton.style.backgroundColor = '#4caf50';
   }, 1000);
   resetGame();
-  regenerateVar();
+  targetNumber = regenerateVar();
 });
 
 
@@ -265,6 +263,7 @@ applySettingsButton.addEventListener('click', () => {
 window.addEventListener('load', () => {
   // Play a random background track when the page loads
   // backgroundMusicPlayer.playRandomTrack();
+  settingsContainer.classList.add('hidden');
 
   toggleBgMusic.addEventListener('click', () => {
     backgroundMusicPlayer.playRandomTrack();
