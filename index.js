@@ -263,6 +263,7 @@ applySettingsButton.addEventListener('click', () => {
 window.addEventListener('load', () => {
   // Play a random background track when the page loads
   // backgroundMusicPlayer.playRandomTrack();
+  settingsContainer.classList.add('hidden');
 
   toggleBgMusic.addEventListener('click', () => {
     backgroundMusicPlayer.playRandomTrack();
