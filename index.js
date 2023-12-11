@@ -1,13 +1,14 @@
 //main js file
 import { audioPlayer, backgroundMusicPlayer } from './AudioPlayer.js'
 
-
 // Generate a randiom number between 1 and 10
 //let targetNumber = Math.floor(Math.random() * 10) + 1;
 const guessInput = document.getElementById('guessInput');
 const checkGuessButton = document.getElementById('checkGuess');
 const submitButton = document.querySelectorAll('button')[1];
 const messageBox = document.getElementById('message');
+const timerElement = document.getElementById('time');
+const resetButton = document.getElementById('reset');
 const hintBox = document.getElementById('hint-message');
 const scoreBox = document.getElementById('score');
 const backgroundMusicContainer = document.getElementById('backgroundMusic');
@@ -44,7 +45,7 @@ function regenerateVar() {
 
     //update the message box
     messageBox.innerText = `Guess a number between ${min} and ${max}`;
-
+    guessInput.style.width = guessInput.offsetWidth + 'px';
     // guessInput minimum and maximum values
     guessInput.min = min;
     guessInput.max = max;
@@ -54,7 +55,7 @@ function regenerateVar() {
 }
 
 // Add these variables at the beginning of your JavaScript code
-const timerElement = document.getElementById('time');
+
 let timerSeconds = 60; // Set the initial time in seconds
 let game_over = false;
 
@@ -64,7 +65,7 @@ function updateTimer() {
 }
 
 // Add this function to decrement the timer
-function decrementTimer() {
+async function decrementTimer() {
   // If the game is over, don't decrement the timer
   if (game_over) {
     return;
@@ -83,7 +84,7 @@ function decrementTimer() {
     }
     
     // Play the tick sound when the timer is decremented
-    audioPlayer.playTickSound();
+     audioPlayer.playTickSound;
   }
 }
 
@@ -104,6 +105,9 @@ let scoreState = createState(100);
 scoreBox.innerText = scoreState.getValue();
 
 function checkGuess() {
+  
+  guessInput.style.width = guessInput.offsetWidth + 'px';
+
   audioPlayer.playClickSound();
   // plyer's guess
   const playerGuess = guessInput.value;
@@ -157,14 +161,14 @@ function checkGuess() {
 
 };
 
-checkGuessButton.addEventListener('click', checkGuess());
+checkGuessButton.addEventListener('click', ()=>{checkGuess()});
 
 function resetGame() {
   // Reset the game by setting all values back to their defaults
   regenerateVar();
   attempts = 0;
   timerSeconds = 60;
-  score = 100;
+  let score = 100;
   // targetNumber = Math.floor(Math.random() * 10) + 1;
   guessInput.value = '';
   guessInput.disabled = false;
@@ -177,6 +181,7 @@ function resetGame() {
   scoreBox.innerText = score;
   // alert('Game reset. Try again!');
 }
+resetButton.addEventListener('click', resetGame);
 
 function endGame() {
   // Display a message indicating the end of the game
@@ -255,9 +260,11 @@ applySettingsButton.addEventListener('click', () => {
     backgroundMusicPlayer.stop();
   });
 
+
+  
 window.addEventListener('load', () => {
   // Play a random background track when the page loads
-  backgroundMusicPlayer.playRandomTrack();
+  // backgroundMusicPlayer.playRandomTrack();
 
   toggleBgMusic.addEventListener('click', () => {
     backgroundMusicPlayer.playRandomTrack();
