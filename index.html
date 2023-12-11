@@ -12,12 +12,12 @@
 			<!-- <h1>NumQuest</h1> -->
 			
 			<h1 class="shake"> Score:<span id="score" ></span></h1>
-			<button style="background-color: #d70000;" onclick="resetGame()">Reset</button>
+			<button style="background-color: #d70000;" id="reset">Reset</button>
 		<div class="container">
 			<h1>The Number Guessing Game</h1>
         <p id="message">Guess a number between 1 and 10</p>
         <input type="number" id="guessInput" placeholder="Enter your guess">
-        <button onclick="checkGuess()">Guess</button>
+        <button id="checkGuess">Guess</button>
 		<p id="hint-message"></p>
 		</div>
 
@@ -25,7 +25,7 @@
 		<p id="timer">Time left: <span id="time">60s</span></p>
 
 		<!-- Settings -->
-		<button onclick="toggleSettings()" id="settings-toggle">Show / Hide Settings</button>
+		<button id="settings-toggle">Show / Hide Settings</button>
 		<div class="settings">
 			<div id="settings" class="settings-content">
 				<h2>Settings</h2>
@@ -35,21 +35,21 @@
 					<input type="number" id="range" value="10" min="1" max="100">
 				</div>
 				<div class="settings-row">
-					<button onclick="saveSettings()" id="savesettings">Apply</button>
+					<button  id="savesettings">Apply</button>
 				</div>
 
 				<!-- toggle background music -->
 				<div class="settings-row">
 					<p >Toggle background music</p>
-					<button onclick="toggleBackgroundMusic()" id="toggleBgMusic">Suffle</button>
-					<button onclick="stopBgMusic()" style="background-color: #d70000;" id="toggleBgMusic">Stop</button>
+					<button id="toggleBgMusic">Suffle</button>
+					<button id="stopBgMusic" style="background-color: #d70000;" id="toggleBgMusic">Stop</button>
 				</div>
 			</div>
 
 
 		<!--  audio element for background music -->
-		<audio id="backgroundMusic" autoplay loop></audio>
-		<script src="./index.js"></script>
+		<audio id="backgroundMusic" autoplay="true" muted="muted" loop></audio>
+		<script src="./index.js" type="module"></script>
 	</body>
 </html>
 

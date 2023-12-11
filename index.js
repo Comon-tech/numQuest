@@ -1,9 +1,14 @@
+//main js file
+import { audioPlayer, backgroundMusicPlayer } from './AudioPlayer.js'
 
 // Generate a randiom number between 1 and 10
 //let targetNumber = Math.floor(Math.random() * 10) + 1;
 const guessInput = document.getElementById('guessInput');
+const checkGuessButton = document.getElementById('checkGuess');
 const submitButton = document.querySelectorAll('button')[1];
 const messageBox = document.getElementById('message');
+const timerElement = document.getElementById('time');
+const resetButton = document.getElementById('reset');
 const hintBox = document.getElementById('hint-message');
 const scoreBox = document.getElementById('score');
 const backgroundMusicContainer = document.getElementById('backgroundMusic');
@@ -13,6 +18,7 @@ const range1 = document.getElementById('range_');
 const range2 = document.getElementById('range');
 const applySettingsButton = document.getElementById('savesettings');
 const toggleBgMusic = document.getElementById('toggleBgMusic');
+const stopBgMusicButton = document.getElementById('stopBgMusic');
 // const timeBox = document.getElementById('time');
 
 function regenerateVar() {
@@ -39,7 +45,7 @@ function regenerateVar() {
 
     //update the message box
     messageBox.innerText = `Guess a number between ${min} and ${max}`;
-
+    guessInput.style.width = guessInput.offsetWidth + 'px';
     // guessInput minimum and maximum values
     guessInput.min = min;
     guessInput.max = max;
@@ -49,7 +55,7 @@ function regenerateVar() {
 }
 
 // Add these variables at the beginning of your JavaScript code
-const timerElement = document.getElementById('time');
+
 let timerSeconds = 60; // Set the initial time in seconds
 let game_over = false;
 
@@ -59,7 +65,7 @@ function updateTimer() {
 }
 
 // Add this function to decrement the timer
-function decrementTimer() {
+async function decrementTimer() {
   // If the game is over, don't decrement the timer
   if (game_over) {
     return;
@@ -78,8 +84,7 @@ function decrementTimer() {
     }
     
     // Play the tick sound when the timer is decremented
-    const tickSound = new Audio('audioTracks/tick_time_sound.mp3');
-    tickSound.play();
+     audioPlayer.playTickSound;
   }
 }
 
@@ -91,23 +96,6 @@ function generateRandomNumber() {
 }
 let targetNumber;
 
-// Audio elements
-const correctSound = new Audio('audioTracks/success-sound.mp3');
-const wrongSound = new Audio('audioTracks/wrong.mp3'); 
-const clickSound = new Audio('audioTracks/click.mp3'); 
-
-function playCorrectSound() {
-  correctSound.play();
-}
-
-function playClickSound() {
-  clickSound.play();
-}
-
-function playWrongSound() {
-  wrongSound.play();
-}
-
 let attempts = 0;
 // scoreBox.innerText = score;
 
@@ -117,7 +105,10 @@ let scoreState = createState(100);
 scoreBox.innerText = scoreState.getValue();
 
 function checkGuess() {
-  playClickSound();
+  
+  guessInput.style.width = guessInput.offsetWidth + 'px';
+
+  audioPlayer.playClickSound();
   // plyer's guess
   const playerGuess = guessInput.value;
 
@@ -137,26 +128,26 @@ function checkGuess() {
     displayHint('YAAAY!!');
     disableInput();
     awardPoints();
-    playCorrectSound();
+    audioPlayer.playCorrectSound();
 	displayMessage(`Congratulations! You guessed the number ${targetNumber} in ${attempts} attempts.\nYou scored ${scoreState.getValue()} points and you spent ${60 - timerSeconds} seconds.`);
 
   } else if (playerGuess < targetNumber) {
     messageBox.id = 'message-error';
     displayMessage(`Wrong guess. Try again.`);
     displayHint('Hint~> Try a higher number.');
-    wrongSound.play();
+    audioPlayer.playWrongSound();
 
     // Update the score with a callback to immediately reflect the change
     scoreState.setValue(scoreState.getValue() - 10, updatedScore => {
       // Display the updated score
-      scoreBox.innerText = updatedScore;
+      audioPlayer.playWrongSound();
     });
 
   } else if (playerGuess > targetNumber) {
     messageBox.id = 'message-error';
     displayMessage(`Wrong guess. Try again.`);
     displayHint('hint~> Try a lower number.');
-    wrongSound.play();
+    audioPlayer.playWrongSound();
 
     // Update the score with a callback to immediately reflect the change
     scoreState.setValue(scoreState.getValue() - 10, updatedScore => {
@@ -170,12 +161,14 @@ function checkGuess() {
 
 };
 
+checkGuessButton.addEventListener('click', ()=>{checkGuess()});
+
 function resetGame() {
   // Reset the game by setting all values back to their defaults
   regenerateVar();
   attempts = 0;
   timerSeconds = 60;
-  score = 100;
+  let score = 100;
   // targetNumber = Math.floor(Math.random() * 10) + 1;
   guessInput.value = '';
   guessInput.disabled = false;
@@ -188,6 +181,7 @@ function resetGame() {
   scoreBox.innerText = score;
   // alert('Game reset. Try again!');
 }
+resetButton.addEventListener('click', resetGame);
 
 function endGame() {
   // Display a message indicating the end of the game
@@ -196,8 +190,7 @@ function endGame() {
   game_over = true;
 
   // Play the tick sound when the game ends
-  const endGameSound = new Audio('audioTracks/tick_time_sound.mp3');
-  endGameSound.play();
+  audioPlayer.playEndGameSound();
 }
 
 function displayMessage(message) {
@@ -234,7 +227,6 @@ function createState(initialValue) {
   return { getValue, setValue };
 }
 
-
 function awardPoints() {
   // You can increase the points for faster correct guesses or other criteria
   const pointsAwarded = 20; // Adjust this value as needed
@@ -245,35 +237,12 @@ function awardPoints() {
   });
 }
 
-//background music
-
-// Audio elements for background music
-const backgroundTracks = ['audioTracks/lady-of-the-80.mp3', 'audioTracks/digital-love.mp3', 'audioTracks/a-hero-of-the-80.mp3', 'audioTracks/stranger-things.mp3']; // Add paths to your audio files
-let currentBackgroundTrack;
-
-function playRandomBackgroundTrack() {
-  // Select a random track from the array
-  const randomIndex = Math.floor(Math.random() * backgroundTracks.length);
-  const randomTrack = backgroundTracks[randomIndex];
-
-  // Ensure that the selected track is different from the current one
-  if (currentBackgroundTrack !== randomTrack) {
-    // Update the current background track
-    currentBackgroundTrack = randomTrack;
-
-    // Set the new track and play it
-    backgroundMusicContainer.src = currentBackgroundTrack;
-    backgroundMusicContainer.play();
-  } else {
-    // If the selected track is the same as the current one, recursively call the function again
-    playRandomBackgroundTrack();
-  }
-}
-
 function toggleSettings() {
   // Toggle the visibility of the settings container
   settingsContainer.classList.toggle('hidden');
 }
+// Call the toggleSettings function when the settings toggle is clicked
+settingsToggle.addEventListener('click', toggleSettings);
 
 applySettingsButton.addEventListener('click', () => {
   applySettingsButton.style.backgroundColor = '#7bd87e';
@@ -286,17 +255,19 @@ applySettingsButton.addEventListener('click', () => {
 });
 
 
-function stopBgMusic() {
   // Pause the background music
-  backgroundMusicContainer.pause();
-}
+  stopBgMusicButton.addEventListener('click', () => {
+    backgroundMusicPlayer.stop();
+  });
 
+
+  
 window.addEventListener('load', () => {
   // Play a random background track when the page loads
-  playRandomBackgroundTrack();
+  // backgroundMusicPlayer.playRandomTrack();
 
   toggleBgMusic.addEventListener('click', () => {
-    playRandomBackgroundTrack();
+    backgroundMusicPlayer.playRandomTrack();
   });
   
 });
