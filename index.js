@@ -12,6 +12,7 @@ const settingsContainer = document.getElementById('settings');
 const range1 = document.getElementById('range_');
 const range2 = document.getElementById('range');
 const applySettingsButton = document.getElementById('savesettings');
+const toggleBgMusic = document.getElementById('toggleBgMusic');
 // const timeBox = document.getElementById('time');
 
 function regenerateVar() {
@@ -81,9 +82,9 @@ function generateRandomNumber() {
 let targetNumber;
 
 // Audio elements
-const correctSound = new Audio('audioTracks/success-sound.mp3'); // Replace 'correct.mp3' with your sound file
-const wrongSound = new Audio('audioTracks/wrong.mp3'); // Replace 'wrong.mp3' with your sound file
-const clickSound = new Audio('audioTracks/click.mp3'); // Replace 'wrong.mp3' with your sound file
+const correctSound = new Audio('audioTracks/success-sound.mp3');
+const wrongSound = new Audio('audioTracks/wrong.mp3'); 
+const clickSound = new Audio('audioTracks/click.mp3'); 
 
 function playCorrectSound() {
   correctSound.play();
@@ -274,11 +275,18 @@ applySettingsButton.addEventListener('click', () => {
   }, 1000);
 });
 
+
+function stopBgMusic() {
+  // Pause the background music
+  backgroundMusicContainer.pause();
+}
+
 window.addEventListener('load', () => {
   // Play a random background track when the page loads
-  // Wait for the user to interact with the page before playing the track
-  window.addEventListener('click', () => {
+  playRandomBackgroundTrack();
+
+  toggleBgMusic.addEventListener('click', () => {
     playRandomBackgroundTrack();
-    window.removeEventListener('click', playRandomBackgroundTrack);
   });
+  
 });
