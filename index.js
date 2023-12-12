@@ -85,7 +85,7 @@ async function decrementTimer() {
     }
     
     // Play the tick sound when the timer is decremented
-     audioPlayer.playTickSound;
+     audioPlayer.playTickSound();
   }
 }
 
