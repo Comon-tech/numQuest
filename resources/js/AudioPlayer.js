@@ -70,12 +70,12 @@ export const audioPlayer = new AudioPlayer(
     'audioTracks/click.mp3',
     'audioTracks/tick_time_sound.mp3',
     'audioTracks/tick_time_sound.mp3'
-);
+  );
 
 // Usage
 export const backgroundMusicPlayer = new BackgroundMusicPlayer([
-    'audioTracks/lady-of-the-80.mp3',
-    'audioTracks/digital-love.mp3',
-    'audioTracks/a-hero-of-the-80.mp3',
-    'audioTracks/stranger-things.mp3',
+  'audioTracks/lady-of-the-80.mp3',
+  'audioTracks/digital-love.mp3',
+  'audioTracks/a-hero-of-the-80.mp3',
+  'audioTracks/stranger-things.mp3',
 ]);
