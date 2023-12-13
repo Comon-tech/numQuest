@@ -6,57 +6,58 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 		<link rel="stylesheet" href="./resources/css/style.css">
 
+		<script src="./resources/js/index.js" difer type="module"></script>
 	</head>
 
-	<body>
-			<!-- Settings -->
-			<div class="settings-container">
-				<div class="settings-top">
-					<h3>Settings</h3>
-					<button id="settings-toggle">ICON</button>
-				</div>
-				<div class="settings">
-					<div id="settings" class="settings-content">
-						
-						<div class="settings-row">
-							<label for="range_">Number range:</label>
+<body>
+	<!-- Settings -->
+	<div class="settings-container">
+		<div class="settings-top">
+			<h3>Settings</h3>
+			<button id="settings-toggle">ICON</button>
+		</div>
+		<div class="settings">
+			<div id="settings" class="settings-content">
+
+				<div class="settings-row">
+					<label for="range_">Number range:</label>
 					<div class="settings-row">
-							<input type="number" id="range_" value="1" min="1" max="100">
-							<input type="number" id="range" value="10" min="1" max="100">
-							<button  id="savesettings">Apply</button>
-						</div>
-						</div>
-		
-						<!-- toggle background music -->
-						<div class="settings-row">
-							<p >Background music</p>
-							<button id="toggleBgMusic">Suffle</button>
-							<button id="stopBgMusic" style="background-color: #d70000;" id="toggleBgMusic">Stop</button>
-						</div>
+						<input type="number" id="range_" value="1" min="1" max="100">
+						<input type="number" id="range" value="10" min="1" max="100">
+						<button id="savesettings">Apply</button>
 					</div>
-					</div>
+				</div>
+
+				<!-- toggle background music -->
+				<div class="settings-row">
+					<p>Background music</p>
+					<button id="toggleBgMusic">Suffle</button>
+					<button id="stopBgMusic" style="background-color: #d70000;" id="toggleBgMusic">Stop</button>
+				</div>
 			</div>
+		</div>
+	</div>
 	<!-- Settings -->
 
 	<div class="devider"></div>
 
-	<div class="container">		
-					<h1 class="shake"> Score:<span id="score" ></span></h1>
-					<button style="background-color: #d70000;" id="reset">Reset</button>
-				<div class="message-container">
-					
-				<p id="message">Guess a number between 1 and 10</p>
-				<input type="number" id="guessInput" placeholder="Enter your guess">
-				<button id="checkGuess">Guess</button>
-				<p id="hint-message"></p>
-				</div>
-		
-				<!-- Add this element to display the timer -->
-				<p id="timer">Time left: <span id="time">60s</span></p>
-		
-			
-				<!--  audio element for background music -->
-				<audio id="backgroundMusic" autoplay="true" muted="muted" loop></audio>
+	<div class="container">
+		<h1 class="shake"> Score:<span id="score"></span></h1>
+		<button style="background-color: #d70000;" id="reset">Reset</button>
+		<div class="message-container">
+
+			<p id="message">Guess a number between 1 and 10</p>
+			<input type="number" id="guessInput" placeholder="Enter your guess">
+			<button id="checkGuess">Guess</button>
+			<p id="hint-message"></p>
+		</div>
+
+		<!-- Add this element to display the timer -->
+		<p id="timer">Time left: <span id="time">60s</span></p>
+
+
+		<!--  audio element for background music -->
+		<audio id="backgroundMusic" autoplay="true" muted="muted" loop></audio>
 	</div>
 
 	<div class="devider"></div>
@@ -64,9 +65,8 @@
 	<!-- Something -->
 	<div class="something-container">
 		<p>Something interesting</p>
-			</div>
+	</div>
 	</div>
 <!-- Something -->
-		<script src="./resources/js/index.js" type="module"></script>
 	</body>
 </html>
