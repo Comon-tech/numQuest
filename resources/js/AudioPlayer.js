@@ -1,4 +1,4 @@
-// audio.js
+// AudioPlayer.js
 
 class AudioPlayer {
 
