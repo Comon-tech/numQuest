@@ -2,6 +2,8 @@
 
 NumQuest is a simple number-guessing game built using HTML, CSS, and vanilla JavaScript.
 
+* Join our server on [discord](https://discord.gg/RCFAKcna)
+  
 ## Game Overview
 
 NumQuest challenges players to guess a randomly generated number within a certain range. Players receive hints and score points based on their guesses.
