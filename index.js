@@ -105,7 +105,7 @@ let scoreState = createState(100);
 scoreBox.innerText = scoreState.getValue();
 
 function checkGuess() {
-  
+
   guessInput.style.width = guessInput.offsetWidth + 'px';
 
   audioPlayer.playClickSound();
