@@ -275,7 +275,7 @@ stopBgMusicButton.addEventListener('click', () => {
 
 window.addEventListener('load', () => {
     // Play a random background track when the page loads
-    backgroundMusicPlayer.playRandomTrack();
+    // backgroundMusicPlayer.playRandomTrack();
 
     toggleBgMusic.addEventListener('click', () => {
         console.log("icon clicked")
