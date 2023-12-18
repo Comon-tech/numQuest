@@ -275,10 +275,21 @@ stopBgMusicButton.addEventListener('click', () => {
 
 window.addEventListener('load', () => {
     // Play a random background track when the page loads
-    // backgroundMusicPlayer.playRandomTrack();
+    const playPromise = backgroundMusicPlayer.playRandomTrack();
+    if (playPromise !== undefined) {
+        playPromise.then(function() {
+          // Automatic playback started!
+          backgroundMusicPlayer.playRandomTrack();
+        }).catch(function(error) {
+          // Automatic playback failed.
+          backgroundMusicPlayer.stop();
+          // Show a UI element to let the user manually start playback.
+        });
+      }
+      
 
     toggleBgMusic.addEventListener('click', () => {
-        console.log("icon clicked")
+
         backgroundMusicPlayer.playRandomTrack();
     });
 
