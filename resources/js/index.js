@@ -273,7 +273,7 @@ stopBgMusicButton.addEventListener('click', () => {
     backgroundMusicPlayer.stop();
 });
 
-window.addEventListener('load', () => {
+
     // Play a random background track when the page loads
     const playPromise = backgroundMusicPlayer.playRandomTrack();
     if (playPromise !== undefined) {
@@ -293,5 +293,4 @@ window.addEventListener('load', () => {
         backgroundMusicPlayer.playRandomTrack();
     });
 
-});
 
