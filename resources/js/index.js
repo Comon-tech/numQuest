@@ -1,6 +1,6 @@
 // //main js file
 
-// import { audioPlayer, backgroundMusicPlayer } from './AudioPlayer';
+import { audioPlayer, backgroundMusicPlayer } from './AudioPlayer.js';
 // // Generate a randiom number between 1 and 10
 // //let targetNumber = Math.floor(Math.random() * 10) + 1;
 // const guessInput = document.getElementById('guessInput');
@@ -17,8 +17,8 @@ const settingsContainer = document.getElementById('settings');
 // const range1 = document.getElementById('range_');
 // const range2 = document.getElementById('range');
 // const applySettingsButton = document.getElementById('savesettings');
-// const toggleBgMusic = document.getElementById('toggleBgMusic');
-// const stopBgMusicButton = document.getElementById('stopBgMusic');
+const toggleBgMusic = document.getElementById('toggleBgMusic');
+const stopBgMusicButton = document.getElementById('stopBgMusic');
 // // const timeBox = document.getElementById('time');
 
 
@@ -269,18 +269,18 @@ settingsToggle.addEventListener('click', toggleSettings);
 // });
 
 // // Pause the background music
-// stopBgMusicButton.addEventListener('click', () => {
-//     backgroundMusicPlayer.stop();
-// });
+stopBgMusicButton.addEventListener('click', () => {
+    backgroundMusicPlayer.stop();
+});
 
-// window.addEventListener('load', () => {
-//     // Play a random background track when the page loads
-//     // backgroundMusicPlayer.playRandomTrack();
+window.addEventListener('load', () => {
+    // Play a random background track when the page loads
+    backgroundMusicPlayer.playRandomTrack();
 
-//     toggleBgMusic.addEventListener('click', () => {
-//         console.log("icon clicked")
-//         backgroundMusicPlayer.playRandomTrack();
-//     });
+    toggleBgMusic.addEventListener('click', () => {
+        console.log("icon clicked")
+        backgroundMusicPlayer.playRandomTrack();
+    });
 
-// });
-// }
+});
+
