@@ -53,6 +53,12 @@ class BackgroundMusicPlayer {
             this.currentTrack = randomTrack;
             this.audioElement.src = this.currentTrack;
             this.audioElement.play()
+
+            var playPromise = this.audioElement.play();
+            if (playPromise == undefined){
+                this.audioElement.play();     
+            }
+        } else {
             this.playRandomTrack();
         }
     }

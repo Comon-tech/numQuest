@@ -293,4 +293,3 @@ stopBgMusicButton.addEventListener('click', () => {
         backgroundMusicPlayer.playRandomTrack();
     });
 
-
