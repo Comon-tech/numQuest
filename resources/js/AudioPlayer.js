@@ -71,18 +71,18 @@ class BackgroundMusicPlayer {
 
 // Create an instance of the AudioPlayer class   // Export the instance for use in the mein module
 export const audioPlayer = new AudioPlayer(
-    '/resources/audio/success-sound.mp3',
-    '/resources/audio/wrong.mp3',
-    '/resources/audio/click.mp3',
-    '/resources/audio/tick_time_sound.mp3',
-    '/resources/audio/tick_time_sound.mp3'
+    './resources/audio/success-sound.mp3',
+    './resources/audio/wrong.mp3',
+    './resources/audio/click.mp3',
+    './resources/audio/tick_time_sound.mp3',
+    './resources/audio/tick_time_sound.mp3'
   );
 
 // Usage
 export const backgroundMusicPlayer = new BackgroundMusicPlayer([
 
-  '/resources/audio/lady-of-the-80.mp3',
-  '/resources/audio/digital-love.mp3',
-  '/resources/audio/a-hero-of-the-80.mp3',
-  '/resources/audio/stranger-things.mp3',
+  './resources/audio/lady-of-the-80.mp3',
+  './resources/audio/digital-love.mp3',
+  './resources/audio/a-hero-of-the-80.mp3',
+  './resources/audio/stranger-things.mp3',
 ]);
