@@ -10,6 +10,12 @@ body {
     color: #0d3d65;
 }
 
+@media (max-width: 700px) {
+    body{
+        flex-direction: column;
+    }
+}
+
 .message-container {
     display: flex;
     align-items: center;
