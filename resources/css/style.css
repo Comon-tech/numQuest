@@ -13,6 +13,13 @@ body {
 @media (max-width: 700px) {
     body{
         flex-direction: column;
+        /* height: 100vh; */
+    }
+    .devider{
+        display: none;
+    }
+    .settings{
+        margin: 20px;
     }
 }
 
