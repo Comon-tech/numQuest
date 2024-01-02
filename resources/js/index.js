@@ -1,4 +1,6 @@
 import { audioPlayer, backgroundMusicPlayer } from './AudioPlayer.js';
+import { HistoryManager } from './history.js'
+
 // Generate a randiom number between 1 and 10
 let targetNumber = Math.floor(Math.random() * 10) + 1;
 const guessInput = document.getElementById('guessInput');
@@ -18,8 +20,10 @@ const applySettingsButton = document.getElementById('savesettings');
 const toggleBgMusic = document.getElementById('toggleBgMusic');
 const stopBgMusicButton = document.getElementById('stopBgMusic');
 // const timeBox = document.getElementById('time');
+const historyManager = new HistoryManager();
 
 let attempts = 0;
+let score = 100;
 function regenerateVar() {
     // Generate the random number based on the range selected by the user
     const min = parseInt(range1.value);
@@ -136,6 +140,12 @@ function checkGuess() {
                 60 - timerSeconds
             } seconds.`
         );
+        historyManager.append({
+          attempts, 
+          timer: timerSeconds, 
+          score,
+        })
+        
     } else if (playerGuess < targetNumber) {
         messageBox.id = 'message-error';
         displayMessage(`Wrong guess. Try again.`);
@@ -172,7 +182,7 @@ function resetGame() {
     regenerateVar();
     attempts = 0;
     timerSeconds = 60;
-    let score = 100;
+    score = 100;
     // targetNumber = Math.floor(Math.random() * 10) + 1;
     guessInput.value = '';
     guessInput.disabled = false;
@@ -288,3 +298,22 @@ stopBgMusicButton.addEventListener('click', () => {
         backgroundMusicPlayer.playRandomTrack();
     });
 
+window.addEventListener("DOMContentLoaded", ()=>{
+  console.log(historyManager.history);
+  for(const item of historyManager.history){
+    const div = document.createElement('div')
+    div.classList.add('history-score')
+
+    const attempts = document.createElement('span')
+    attempts.innerText = `Attempts: ${item.attempts}`
+    const score = document.createElement('span')
+    score.innerText = `Score: ${item.score}`
+    const timer = document.createElement('span')
+    timer.innerText = `Time: ${item.timer}`
+
+    div.appendChild(score)
+    div.appendChild(attempts)
+    div.appendChild(timer)
+    document.getElementById('history-scores').appendChild(div)
+  }
+})
