@@ -21,7 +21,8 @@ body {
     .settings{
         margin: 20px;
     }
-}
+   
+} 
 
 .message-container {
     display: flex;
@@ -110,6 +111,7 @@ button:disabled {
     /* border: 3px solid #4b4b4b;
   border-radius: 30px; */
     padding: 0;
+    transition: 1s;
 }
 
 .settings-top {
@@ -139,8 +141,6 @@ button:disabled {
 .history-score {
     margin: 10px;
     padding: 10px;
-    max-width: 200px;
-    width: 200px;
     display: flex;
     flex-direction: column;
     gap: 5px;
