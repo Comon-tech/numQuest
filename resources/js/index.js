@@ -175,6 +175,7 @@ function checkGuess() {
 
 checkGuessButton.addEventListener('click', () => {
     checkGuess();
+    updateHistory();
 });
 
 function resetGame() {
@@ -298,22 +299,26 @@ stopBgMusicButton.addEventListener('click', () => {
         backgroundMusicPlayer.playRandomTrack();
     });
 
+function updateHistory(){
+    console.log(historyManager.history);
+    for(const item of historyManager.history){
+        const div = document.createElement('div')
+        div.classList.add('history-score')
+
+        const attempts = document.createElement('span')
+        attempts.innerText = `Attempts: ${item.attempts}`
+        const score = document.createElement('span')
+        score.innerText = `Score: ${item.score}`
+        const timer = document.createElement('span')
+        timer.innerText = `Time: ${item.timer}`
+
+        div.appendChild(score)
+        div.appendChild(attempts)
+        div.appendChild(timer)
+        document.getElementById('history-scores').appendChild(div)
+    }
+}
+
 window.addEventListener("DOMContentLoaded", ()=>{
-  console.log(historyManager.history);
-  for(const item of historyManager.history){
-    const div = document.createElement('div')
-    div.classList.add('history-score')
-
-    const attempts = document.createElement('span')
-    attempts.innerText = `Attempts: ${item.attempts}`
-    const score = document.createElement('span')
-    score.innerText = `Score: ${item.score}`
-    const timer = document.createElement('span')
-    timer.innerText = `Time: ${item.timer}`
-
-    div.appendChild(score)
-    div.appendChild(attempts)
-    div.appendChild(timer)
-    document.getElementById('history-scores').appendChild(div)
-  }
+    updateHistory()
 })
