@@ -300,7 +300,10 @@ stopBgMusicButton.addEventListener('click', () => {
     });
 
 function updateHistory(){
-    console.log(historyManager.history);
+    const history = document.getElementById('history-scores')
+    while (history.firstChild) {
+        history.removeChild(history.lastChild);
+      }
     for(const item of historyManager.history){
         const div = document.createElement('div')
         div.classList.add('history-score')
@@ -315,7 +318,7 @@ function updateHistory(){
         div.appendChild(score)
         div.appendChild(attempts)
         div.appendChild(timer)
-        document.getElementById('history-scores').appendChild(div)
+        history.appendChild(div)
     }
 }
 
