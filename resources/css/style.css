@@ -120,6 +120,7 @@ button:disabled {
 #settings {
     /* border: 3px solid #4b4b4b;
   border-radius: 30px; */
+  margin: 5px;
     padding: 0;
     transition: 1s;
 }
@@ -127,6 +128,7 @@ button:disabled {
 #settings-toggle{
     padding: 18px;
     margin: 2px;
+    background-color: #555;
 }
 .settings {
     padding: 5px;
