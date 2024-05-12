@@ -19,8 +19,14 @@ const range2 = document.getElementById('range');
 const applySettingsButton = document.getElementById('savesettings');
 const toggleBgMusic = document.getElementById('toggleBgMusic');
 const stopBgMusicButton = document.getElementById('stopBgMusic');
+const volumeControl = document.getElementById('volume');
 // const timeBox = document.getElementById('time');
 const historyManager = new HistoryManager();
+
+volumeControl.addEventListener('input', () => {
+    audioPlayer.setVolume(volumeControl.value);
+    backgroundMusicPlayer.setVolume(volumeControl.value);
+});
 
 let attempts = 0;
 let score = 100;
@@ -130,6 +136,7 @@ function checkGuess() {
     //check if the guess is correct
     if (playerGuess == targetNumber) {
         messageBox.id = 'message-success';
+        checkGuessButton.disabled = true;
         game_over = true;
         displayHint('YAAAY!!');
         disableInput();
@@ -181,6 +188,7 @@ checkGuessButton.addEventListener('click', () => {
 function resetGame() {
     // Reset the game by setting all values back to their defaults
     regenerateVar();
+    checkGuessButton.disabled = false;
     attempts = 0;
     timerSeconds = 60;
     score = 100;
@@ -218,6 +226,7 @@ function displayMessage(message) {
 
 function disableInput() {
     guessInput.disabled = true;
+    checkGuessButton.disabled = true;
     submitButton.disabled = true;
 }
 
