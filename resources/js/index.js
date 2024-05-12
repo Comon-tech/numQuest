@@ -130,6 +130,7 @@ function checkGuess() {
     //check if the guess is correct
     if (playerGuess == targetNumber) {
         messageBox.id = 'message-success';
+        checkGuessButton.disabled = true;
         game_over = true;
         displayHint('YAAAY!!');
         disableInput();
@@ -181,6 +182,7 @@ checkGuessButton.addEventListener('click', () => {
 function resetGame() {
     // Reset the game by setting all values back to their defaults
     regenerateVar();
+    checkGuessButton.disabled = false;
     attempts = 0;
     timerSeconds = 60;
     score = 100;
