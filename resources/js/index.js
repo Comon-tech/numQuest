@@ -220,6 +220,7 @@ function displayMessage(message) {
 
 function disableInput() {
     guessInput.disabled = true;
+    checkGuessButton.disabled = true;
     submitButton.disabled = true;
 }
 
