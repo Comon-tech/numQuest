@@ -14,25 +14,38 @@ class AudioPlayer {
         this.clickSound = new Audio(clickSoundSrc);
         this.tickSound = new Audio(tickSoundSrc);
         this.endGameSound = new Audio(endGameSoundSrc);
+        this.volumeControl = document.getElementById('volume');
         // this.endGameSound = new Audio(endGameSoundSrc);
     }
-
+    setVolume() {
+        this.correctSound.volume = this.volumeControl.value;
+        this.wrongSound.volume = this.volumeControl.value;
+        this.clickSound.volume = this.volumeControl.value;
+        this.tickSound.volume = this.volumeControl.value;
+        this.endGameSound.volume = this.volumeControl.value;
+    }
     playCorrectSound() {
+        this.correctSound.volume = this.volumeControl.value;
         this.correctSound.play();
     }
 
     playWrongSound() {
+        this.wrongSound.volume = this.volumeControl.value;
         this.wrongSound.play();
     }
 
     playClickSound() {
+        this.clickSound.volume = this.volumeControl.value;
         this.clickSound.play();
     }
 
     playTickSound() {
+        this.tickSound.volume = this.volumeControl.value;
         this.tickSound.play();
     }
+    
     playEndGameSound() {
+        this.endGameSound.volume = this.volumeControl.value;
         this.endGameSound.play();
     }
 }
@@ -43,6 +56,10 @@ class BackgroundMusicPlayer {
         this.tracks = tracks;
         this.currentTrack = null;
         this.audioElement = new Audio();
+        this.volumeControl = document.getElementById('volume');
+    }
+    setVolume() {
+        this.audioElement.volume = this.volumeControl.value;
     }
 
     playRandomTrack() {
@@ -52,6 +69,7 @@ class BackgroundMusicPlayer {
         if (this.currentTrack !== randomTrack) {
             this.currentTrack = randomTrack;
             this.audioElement.src = this.currentTrack;
+            this.audioElement.volume = this.volumeControl.value;
             this.audioElement.play()
 
             var playPromise = this.audioElement.play();
