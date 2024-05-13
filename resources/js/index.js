@@ -143,7 +143,7 @@ function checkGuess() {
         awardPoints();
         audioPlayer.playCorrectSound();
         displayMessage(
-            `Congratulations! You guessed the number ${targetNumber} in ${attempts} attempts.\nYou scored ${scoreState.getValue()} points and you spent ${
+            `You guessed the number ${targetNumber} in ${attempts} attempts. And you spent ${
                 60 - timerSeconds
             } seconds.`
         );
@@ -156,7 +156,7 @@ function checkGuess() {
     } else if (playerGuess < targetNumber) {
         messageBox.id = 'message-error';
         displayMessage(`Wrong guess. Try again.`);
-        displayHint('Hint~> Try a higher number.');
+        displayHint('Try a higher number.');
         audioPlayer.playWrongSound();
 
         // Update the score with a callback to immediately reflect the change
@@ -167,7 +167,7 @@ function checkGuess() {
     } else if (playerGuess > targetNumber) {
         messageBox.id = 'message-error';
         displayMessage(`Wrong guess. Try again.`);
-        displayHint('hint~> Try a lower number.');
+        displayHint('Try a lower number.');
         audioPlayer.playWrongSound();
 
         // Update the score with a callback to immediately reflect the change

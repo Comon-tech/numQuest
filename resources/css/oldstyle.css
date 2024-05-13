@@ -1,0 +1,190 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    flex-direction: row;
+    max-height: 100vh;
+    margin: 0;
+    background-color: #1a1a1a;
+    color: #0d3d65;
+}
+
+@media (max-width: 700px) {
+    body{
+        justify-content: center;
+        flex-direction: column;
+        /* height: 100vh; */
+    }
+    .settings-cotainer{
+        width: 100%;
+        background-color: #1a1a1a;
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+    }
+    .devider{
+        display: none;
+    }
+    .settings{
+        margin: 20px;
+    }
+   
+} 
+
+.message-container {
+    display: flex;
+    align-items: center;
+    max-height: 100vh;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+#message-success {
+    color: #4caf50;
+}
+#message-error {
+    color: #d70000;
+}
+#message-warn {
+    color: #d75f00;
+}
+p {
+    font-size: 1em;
+}
+
+input {
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 1em;
+    font-family: 'Press Start 2P', cursive;
+}
+input,
+button {
+    border-radius: 12px;
+}
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.devider {
+    background-color: #4caf50;
+    width: 3px;
+    height: 100%;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25%,
+    75% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+    margin-top: 50px;
+}
+.settings-cotainer{
+    display: flex;
+    
+}
+
+#settings {
+    /* border: 3px solid #4b4b4b;
+  border-radius: 30px; */
+  margin: 5px;
+    padding: 0;
+    transition: 1s;
+}
+
+#settings-toggle{
+    padding: 18px;
+    margin: 2px;
+    background-color: #555;
+}
+.settings {
+    padding: 5px;
+}
+
+#timer {
+    margin-bottom: 50px;
+}
+
+.hidden {
+    display: none;
+}
+
+.history p {
+    text-align: center;
+}
+
+.history-score {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px !important;
+    border-radius: 12px;
+    background-color: #81ef85;
+    color: #fff;
+    font-size: 1em;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* #volume is a slider, we need to make it look pixelated */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #63ff69;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    cursor: pointer;
+}
