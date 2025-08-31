@@ -26,8 +26,15 @@ export class MultiplayerManager {
         try {
             console.log('🔌 Initializing Socket.IO connection...');
             
+            // Get the server URL from environment or use localhost for development
+            const serverUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                ? 'http://localhost:3000' 
+                : `https://${window.location.hostname}`;
+            
+            console.log('🌐 Connecting to server:', serverUrl);
+            
             // Connect to the multiplayer server
-            this.socket = io('http://localhost:3000', {
+            this.socket = io(serverUrl, {
                 transports: ['websocket', 'polling'],
                 timeout: 10000,
                 reconnection: true,
