@@ -4,175 +4,264 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>numQuest</title>
+	<title>NumQuest Multiplayer</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 	<link rel="stylesheet" href="./resources/css/style.css">
 	<link rel="icon" type="image/x-icon" href="resources/images/numquest-logo.png">
-	<script src="resources/js/index.js" defer type="module"></script>
+	<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+	<script src="resources/js/multiplayer.js" defer type="module"></script>
 	<script src="https://kit.fontawesome.com/b7218fa253.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-[#1a1a1a] text-white overflow-x-hidden">
-	<!-- Mobile Navigation Buttons -->
-	<div class="flex justify-between items-center p-4 lg:hidden">
-		<button id="toggle-settings" type="button"
-			class="inline-flex items-center p-2 text-sm text-gray-400 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors">
-			<span class="sr-only">Open settings</span>
-			<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-				xmlns="http://www.w3.org/2000/svg">
-				<path clip-rule="evenodd" fill-rule="evenodd"
-					d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-				</path>
-			</svg>
-		</button>
-
-		<button id="toggle-history" type="button"
-			class="inline-flex items-center p-2 text-sm text-gray-400 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors">
-			<span class="sr-only">Open History</span>
-			<i class="text-2xl fa-solid fa-clock-rotate-left"></i>
-		</button>
+	<!-- Player Join Screen -->
+	<div id="player-join-screen" class="min-h-screen flex items-center justify-center p-4">
+		<div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border-2 border-gray-600">
+			<div class="text-center mb-8">
+				<img src="resources/images/numquest-logo.png" class="w-32 mx-auto mb-4" alt="NumQuest Logo">
+				<h1 class="font-['Press_Start_2P'] text-2xl text-[#78b95f] mb-2">NumQuest</h1>
+				<p class="text-gray-400">Multiplayer Number Guessing Game</p>
+			</div>
+			
+			<form id="player-join-form" class="space-y-6">
+				<div>
+					<label for="username-input" class="block text-sm font-medium mb-2">Username</label>
+					<input type="text" id="username-input" 
+						class="w-full px-4 py-3 bg-gray-700 border-2 border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none transition-colors"
+						placeholder="Enter your username" required>
+				</div>
+				
+				<div>
+					<label for="avatar-select" class="block text-sm font-medium mb-2">Choose Avatar</label>
+					<select id="avatar-select" 
+						class="w-full px-4 py-3 bg-gray-700 border-2 border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none transition-colors">
+						<option value="👤">👤 Player</option>
+						<option value="🎮">🎮 Gamer</option>
+						<option value="🚀">🚀 Rocket</option>
+						<option value="🌟">🌟 Star</option>
+						<option value="🔥">🔥 Fire</option>
+						<option value="💎">💎 Diamond</option>
+						<option value="🎯">🎯 Target</option>
+						<option value="⚡">⚡ Lightning</option>
+					</select>
+				</div>
+				
+				<button type="submit" 
+					class="w-full bg-[#78b95f] hover:bg-[#6aa84f] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg">
+					Join Game
+				</button>
+			</form>
+		</div>
 	</div>
 
-	<!-- Left Sidebar - Game Settings -->
-	<aside id="settings-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out -translate-x-full 
-	 lg:translate-x-0 bg-[#1a1a1a] border-r-2 border-gray-600" aria-label="Game Settings Sidebar">
-		<div class="h-full px-3 py-4 overflow-y-auto">
-			<ul class="space-y-4 font-medium">
-				<li class="flex justify-center">
-					<img src="resources/images/numquest-logo.png" class="w-28" alt="NumQuest Logo">
-				</li>
+	<!-- Multiplayer Lobby -->
+	<div id="multiplayer-lobby" class="min-h-screen p-4" style="display: none;">
+		<div class="max-w-7xl mx-auto">
+			<!-- Header -->
+			<div class="text-center mb-8">
+				<h1 class="font-['Press_Start_2P'] text-3xl text-[#78b95f] mb-4">🎮 NumQuest Multiplayer</h1>
+				<p class="text-gray-400 text-lg">Challenge your friends in real-time number guessing battles!</p>
+			</div>
 
-				<li>
-					<label class="text-white text-sm mb-2 block" for="range_">Number range:</label>
-					<div class="p-3 border-2 border-gray-600 rounded-lg space-y-2">
-						<input class="w-full border-gray-600 rounded-lg px-2 py-1 bg-gray-800 text-white focus:border-[#78b95f] focus:outline-none transition-colors" 
-							type="number" id="range_" value="1" min="1" max="100">
-						<input class="w-full border-gray-600 rounded-lg px-2 py-1 bg-gray-800 text-white focus:border-[#78b95f] focus:outline-none transition-colors" 
-							type="number" id="range" value="10" min="1" max="100">
-						<button class="w-full bg-[#78b95f] hover:bg-[#6aa84f] text-white font-semibold rounded-lg py-2 px-4 transition-all duration-300 hover:transform hover:-translate-y-0.5 hover:shadow-lg" 
-							id="savesettings">Apply</button>
-					</div>
-				</li>
-
-				<li>
-					<div class="p-3 border-2 border-gray-600 rounded-lg space-y-3">
-						<p class="text-center text-sm">Background Music</p>
-						<div class="flex items-center justify-center space-x-4">
-							<button id="toggleBgMusic" class="text-2xl text-[#78b95f] hover:text-[#6aa84f] transition-colors">
-								<i class="fa-solid fa-shuffle"></i>
-							</button>
-							<button id="stopBgMusic" class="text-2xl text-red-500 hover:text-red-400 transition-colors">
-								<i class="fa-solid fa-stop"></i>
-							</button>
-						</div>
-						<div class="space-y-2">
-							<p class="text-center text-sm">Volume</p>
-							<div class="flex items-center space-x-2">
-								<i class="fa-solid fa-volume-low text-gray-400"></i>
-								<input class="flex-1 h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer slider" type="range" id="volume" min="0" max="1" step="0.01" value="0.1">
-								<i class="fa-solid fa-volume-high text-gray-400"></i>
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<!-- Create Room Section -->
+				<div class="lg:col-span-1">
+					<div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-600">
+						<h2 class="text-xl font-bold mb-4 text-[#78b95f]">🏠 Create Room</h2>
+						<form id="create-room-form" class="space-y-4">
+							<div>
+								<label for="game-mode-select" class="block text-sm font-medium mb-2">Game Mode</label>
+								<select id="game-mode-select" 
+									class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none">
+									<option value="competitive">🏆 Competitive</option>
+									<option value="team">👥 Team</option>
+									<option value="cooperative">🤝 Cooperative</option>
+									<option value="tournament">🏅 Tournament</option>
+								</select>
 							</div>
+							
+							<div>
+								<label for="max-rounds-input" class="block text-sm font-medium mb-2">Max Rounds</label>
+								<input type="number" id="max-rounds-input" value="3" min="1" max="10"
+									class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none">
+							</div>
+							
+							<div>
+								<label for="time-limit-input" class="block text-sm font-medium mb-2">Time Limit (seconds)</label>
+								<input type="number" id="time-limit-input" value="60" min="30" max="300"
+									class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none">
+							</div>
+							
+							<div class="grid grid-cols-2 gap-4">
+								<div>
+									<label for="min-range-input" class="block text-sm font-medium mb-2">Min Range</label>
+									<input type="number" id="min-range-input" value="1" min="1" max="1000"
+										class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none">
+								</div>
+								<div>
+									<label for="max-range-input" class="block text-sm font-medium mb-2">Max Range</label>
+									<input type="number" id="max-range-input" value="100" min="1" max="10000"
+										class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none">
+								</div>
+							</div>
+							
+							<button type="submit" 
+								class="w-full bg-[#78b95f] hover:bg-[#6aa84f] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg">
+								Create Room
+							</button>
+						</form>
+					</div>
+				</div>
+
+				<!-- Available Rooms -->
+				<div class="lg:col-span-2">
+					<div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-600">
+						<h2 class="text-xl font-bold mb-4 text-[#78b95f]">🚪 Available Rooms</h2>
+						<div id="room-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<!-- Rooms will be populated here -->
 						</div>
 					</div>
-				</li>
-			</ul>
-		</div>
-	</aside>
-
-	<!-- Right Sidebar - Game History -->
-	<aside id="history-sidebar" class="fixed top-0 right-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out translate-x-full 
-	 lg:translate-x-0 bg-[#1a1a1a] border-l-2 border-gray-600" aria-label="Game History Sidebar">
-		<div class="h-full px-3 py-4 overflow-y-auto">
-			<div class="space-y-4">
-				<div class="text-center">
-					<h3 class="text-lg font-bold text-[#78b95f] mb-4">
-						<i class="fa-solid fa-clock-rotate-left mr-2"></i>
-						Game History
-					</h3>
-					<div class="space-y-2" id="history-scores">
-						<!-- History items will be populated here -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</aside>
-
-	<!-- Main Content -->
-	<div class="p-4 lg:ml-64 lg:mr-64">
-		<div class="max-w-6xl mx-auto">
-			<!-- Game Stats -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-				<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-xl p-6 text-center transition-all duration-300 hover:border-[#78b95f] hover:transform hover:-translate-y-1">
-					<h2 class="text-lg sm:text-xl font-bold mb-2">Score</h2>
-					<p class="text-2xl sm:text-3xl font-bold text-[#78b95f] mb-2" id="score">100</p>
-					<button class="mt-2 px-3 sm:px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors text-sm sm:text-base" id="reset">
-						Reset <i class="fa-solid fa-rotate-left ml-2"></i>
-					</button>
-				</div>
-
-				<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-xl p-6 text-center transition-all duration-300 hover:border-[#78b95f] hover:transform hover:-translate-y-1">
-					<h2 class="text-lg sm:text-xl font-bold mb-2">Time Left</h2>
-					<p class="text-2xl sm:text-3xl font-bold text-[#78b95f]" id="timer">60s</p>
-				</div>
-
-				<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-xl p-6 text-center transition-all duration-300 hover:border-[#78b95f] hover:transform hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
-					<h2 class="text-lg sm:text-xl font-bold mb-2">Status</h2>
-					<p class="text-base sm:text-lg" id="message">Ready to play!</p>
 				</div>
 			</div>
 
-			<!-- Game Area -->
-			<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-2xl p-8 text-center transition-all duration-300 hover:border-[#78b95f]">
-				<div class="max-w-md mx-auto space-y-4 sm:space-y-6">
-					<h1 class="font-['Press_Start_2P'] text-xl sm:text-2xl text-[#78b95f] drop-shadow-lg">Guess the Number!</h1>
-					<p class="text-base sm:text-lg" id="game-instruction">Guess a number between 1 and 10</p>
-					
-					<div class="space-y-3 sm:space-y-4">
-						<input class="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-600 rounded-lg bg-gray-800 text-white text-center text-base sm:text-lg focus:border-[#78b95f] focus:outline-none focus:ring-2 focus:ring-[#78b95f] focus:ring-opacity-20 transition-all duration-300" 
-							type="number" id="guessInput" placeholder="Enter your guess" min="1" max="10">
-						<button class="w-full px-4 sm:px-6 py-2 sm:py-3 bg-[#78b95f] hover:bg-[#6aa84f] text-white text-base sm:text-lg font-bold rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg" 
-							id="checkGuess">Guess!</button>
+			<!-- Online Players -->
+			<div class="mt-8">
+				<div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-600">
+					<h2 class="text-xl font-bold mb-4 text-[#78b95f]">👥 Online Players</h2>
+					<div id="player-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+						<!-- Players will be populated here -->
 					</div>
-					
-					<p class="text-lg text-yellow-400" id="hint-message"></p>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- Game Room -->
+	<div id="game-room" class="min-h-screen p-4" style="display: none;">
+		<div class="max-w-7xl mx-auto">
+			<!-- Room Header -->
+			<div class="flex justify-between items-center mb-6">
+				<h1 class="font-['Press_Start_2P'] text-2xl text-[#78b95f]">Game Room</h1>
+				<button id="leave-room-btn" 
+					class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+					Leave Room
+				</button>
+			</div>
+
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<!-- Room Info -->
+				<div class="lg:col-span-1">
+					<div id="room-info">
+						<!-- Room information will be populated here -->
+					</div>
+					
+					<!-- Game Controls -->
+					<div class="mt-6 bg-gray-800 rounded-2xl p-6 border-2 border-gray-600">
+						<h3 class="text-lg font-bold mb-4 text-[#78b95f]">Game Controls</h3>
+						<div class="space-y-4">
+							<button id="start-game-btn" 
+								class="w-full bg-[#78b95f] hover:bg-[#6aa84f] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg">
+								Start Game
+							</button>
+							
+							<button id="use-powerup-btn" 
+								class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg">
+								Use Power-up
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Chat Section -->
+				<div class="lg:col-span-2">
+					<div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-600 h-96">
+						<h3 class="text-lg font-bold mb-4 text-[#78b95f]">💬 Chat</h3>
+						
+						<!-- Chat Messages -->
+						<div id="chat-container" class="h-64 overflow-y-auto mb-4 space-y-2">
+							<!-- Chat messages will appear here -->
+						</div>
+						
+						<!-- Chat Input -->
+						<form id="chat-form" class="flex space-x-2">
+							<input type="text" id="chat-input" 
+								class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-[#78b95f] focus:outline-none"
+								placeholder="Type your message...">
+							<button type="submit" 
+								class="bg-[#78b95f] hover:bg-[#6aa84f] text-white px-4 py-2 rounded-lg transition-colors">
+								Send
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Game Area -->
+	<div id="game-area" class="min-h-screen p-4" style="display: none;">
+		<div class="max-w-7xl mx-auto">
+			<!-- Game Header -->
+			<div class="text-center mb-8">
+				<h1 class="font-['Press_Start_2P'] text-3xl text-[#78b95f] mb-4">🎯 Game in Progress</h1>
+				<div class="text-2xl font-bold text-yellow-400" id="game-timer">60s</div>
+			</div>
+
+			<!-- Game Display -->
+			<div id="game-display" class="mb-8">
+				<!-- Player scores and game state will be displayed here -->
+			</div>
+
+			<!-- Game Input (for active players) -->
+			<div id="game-input" class="max-w-md mx-auto">
+				<div class="bg-gray-800 rounded-2xl p-8 border-2 border-gray-600 text-center">
+					<h2 class="text-xl font-bold mb-4">Make Your Guess!</h2>
+					<div class="space-y-4">
+						<input type="number" id="multiplayer-guess-input" 
+							class="w-full px-4 py-3 border-2 border-gray-600 rounded-lg bg-gray-700 text-white text-center text-lg focus:border-[#78b95f] focus:outline-none focus:ring-2 focus:ring-[#78b95f] focus:ring-opacity-20 transition-all duration-300"
+							placeholder="Enter your guess" min="1">
+						<button id="submit-guess-btn" 
+							class="w-full bg-[#78b95f] hover:bg-[#6aa84f] text-white text-lg font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg">
+							Submit Guess
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Results Modal Container -->
+	<div id="results-modal"></div>
 
 	<!-- Audio element for background music -->
 	<audio id="backgroundMusic" loop preload="metadata"></audio>
 
-	<!-- Custom sidebar toggle script -->
-	<script>
-		// Sidebar toggle functionality
+	<!-- Initialize Multiplayer -->
+	<script type="module">
+		import { MultiplayerManager } from './resources/js/multiplayer.js';
+		
 		document.addEventListener('DOMContentLoaded', function() {
-			const toggleSettings = document.getElementById('toggle-settings');
-			const toggleHistory = document.getElementById('toggle-history');
-			const settingsSidebar = document.getElementById('settings-sidebar');
-			const historySidebar = document.getElementById('history-sidebar');
-
-			// Toggle settings sidebar
-			toggleSettings.addEventListener('click', function() {
-				settingsSidebar.classList.toggle('-translate-x-full');
-			});
-
-			// Toggle history sidebar
-			toggleHistory.addEventListener('click', function() {
-				historySidebar.classList.toggle('translate-x-full');
-			});
-
-			// Close sidebars when clicking outside (mobile only)
-			document.addEventListener('click', function(event) {
-				if (window.innerWidth < 1024) {
-					if (!settingsSidebar.contains(event.target) && !toggleSettings.contains(event.target)) {
-						settingsSidebar.classList.add('-translate-x-full');
+			window.multiplayerManager = new MultiplayerManager();
+			
+			// Setup guess submission
+			const submitGuessBtn = document.getElementById('submit-guess-btn');
+			const guessInput = document.getElementById('multiplayer-guess-input');
+			
+			if (submitGuessBtn && guessInput) {
+				submitGuessBtn.addEventListener('click', () => {
+					const guess = parseInt(guessInput.value);
+					if (guess && window.multiplayerManager) {
+						window.multiplayerManager.submitGuess(guess);
+						guessInput.value = '';
 					}
-					if (!historySidebar.contains(event.target) && !toggleHistory.contains(event.target)) {
-						historySidebar.classList.add('translate-x-full');
+				});
+				
+				guessInput.addEventListener('keypress', (e) => {
+					if (e.key === 'Enter') {
+						submitGuessBtn.click();
 					}
-				}
-			});
+				});
+			}
 		});
 	</script>
 </body>
