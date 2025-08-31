@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -6,85 +7,70 @@
 	<title>numQuest</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 	<link rel="stylesheet" href="./resources/css/style.css">
-
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-
 	<link rel="icon" type="image/x-icon" href="resources/images/numquest-logo.png">
-
 	<script src="resources/js/index.js" defer type="module"></script>
 	<script src="https://kit.fontawesome.com/b7218fa253.js" crossorigin="anonymous"></script>
-
 </head>
 
-<body class="bg-[#1a1a1a]">
-	<div class="flex justify-between items-center">
-		<button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
-		type="button"
-		class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-		<span class="sr-only">Open sidebar</span>
-		<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-			xmlns="http://www.w3.org/2000/svg">
-			<path clip-rule="evenodd" fill-rule="evenodd"
-				d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-			</path>
-		</svg>
-	</button>
+<body class="bg-[#1a1a1a] text-white overflow-x-hidden">
+	<!-- Mobile Navigation Buttons -->
+	<div class="flex justify-between items-center p-4 lg:hidden">
+		<button id="toggle-settings" type="button"
+			class="inline-flex items-center p-2 text-sm text-gray-400 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors">
+			<span class="sr-only">Open settings</span>
+			<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+				xmlns="http://www.w3.org/2000/svg">
+				<path clip-rule="evenodd" fill-rule="evenodd"
+					d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+				</path>
+			</svg>
+		</button>
 
-	<button data-drawer-target="default-history" data-drawer-toggle="default-history" aria-controls="default-history"
-		type="button"
-		class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-		<span class="sr-only">Open History</span>
-		<i class="text-[24px] fa-solid fa-clock-rotate-left"></i>
-	</button>
+		<button id="toggle-history" type="button"
+			class="inline-flex items-center p-2 text-sm text-gray-400 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors">
+			<span class="sr-only">Open History</span>
+			<i class="text-2xl fa-solid fa-clock-rotate-left"></i>
+		</button>
 	</div>
 
-	<aside id="default-sidebar" class="fixed top-0 left-0 pr-4 z-40 w-64 h-screen transition-transform -translate-x-full 
-	 sm:translate-x-0" aria-label="Sidebar">
-		<div class="h-full px-3 py-4 overflow-y-auto border-2 border-grey-600 bg-[#1a1a1a]">
-			<ul class="space-y-2 font-medium">
-				<li><a href="#"
-						class="flex justify-center items-centerp-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-						<img src="resources/images/numquest-logo.png" class="w-28"></a>
+	<!-- Left Sidebar - Game Settings -->
+	<aside id="settings-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out -translate-x-full 
+	 lg:translate-x-0 bg-[#1a1a1a] border-r-2 border-gray-600" aria-label="Game Settings Sidebar">
+		<div class="h-full px-3 py-4 overflow-y-auto">
+			<ul class="space-y-4 font-medium">
+				<li class="flex justify-center">
+					<img src="resources/images/numquest-logo.png" class="w-28" alt="NumQuest Logo">
 				</li>
 
 				<li>
-					<label class="text-white" for="range_">Number range:</label>
-					<div
-						class="p-2 border-2 border-gray-600 relative flex flex-col gap-2 justify-center items-center rounded-lg ">
-						<input class="border-gray-600 rounded-lg max-w-[11rem]" type="number" id="range_" value="1"
-							min="1" max="100">
-						<input class="border-gray-600 rounded-lg max-w-[11rem]" type="number" id="range" value="10"
-							min="1" max="100">
-						<button class="border-2 border-gray-600 bg-[#78b95f] hover:bg-gray-500  rounded-lg py-1 px-2"
+					<label class="text-white text-sm mb-2 block" for="range_">Number range:</label>
+					<div class="p-3 border-2 border-gray-600 rounded-lg space-y-2">
+						<input class="w-full border-gray-600 rounded-lg px-2 py-1 bg-gray-800 text-white focus:border-[#78b95f] focus:outline-none transition-colors" 
+							type="number" id="range_" value="1" min="1" max="100">
+						<input class="w-full border-gray-600 rounded-lg px-2 py-1 bg-gray-800 text-white focus:border-[#78b95f] focus:outline-none transition-colors" 
+							type="number" id="range" value="10" min="1" max="100">
+						<button class="w-full bg-[#78b95f] hover:bg-[#6aa84f] text-white font-semibold rounded-lg py-2 px-4 transition-all duration-300 hover:transform hover:-translate-y-0.5 hover:shadow-lg" 
 							id="savesettings">Apply</button>
 					</div>
 				</li>
 
 				<li>
-					<div
-						class="p-2 border-2 border-gray-600 relative flex flex-col gap-2 justify-center items-center rounded-lg ">
-						<p>Background music</p>
-						<div class="flex items-center justify-center">
-
-							<button id="toggleBgMusic">
-								<i class="mx-2 text-2xl text-[#78b95f] cursor-pointer fa-solid fa-shuffle"></i>
+					<div class="p-3 border-2 border-gray-600 rounded-lg space-y-3">
+						<p class="text-center text-sm">Background Music</p>
+						<div class="flex items-center justify-center space-x-4">
+							<button id="toggleBgMusic" class="text-2xl text-[#78b95f] hover:text-[#6aa84f] transition-colors">
+								<i class="fa-solid fa-shuffle"></i>
 							</button>
-
-							<button id="stopBgMusic">
-								<i class="mx-2 text-2xl text-[red] cursor-pointer fa-solid fa-stop"></i>
+							<button id="stopBgMusic" class="text-2xl text-red-500 hover:text-red-400 transition-colors">
+								<i class="fa-solid fa-stop"></i>
 							</button>
-
 						</div>
-
-						<div class="settings-row">
-							<p>Volume</p>
-							<div class="flex ga-4">
-								<i class="mx-2 fa-solid fa-volume-low"></i>
-								<!-- <i class="fa-solid fa-volume-xmark"></i> -->
-								<input class="w-[80%]" type="range" id="volume" min="0" max="0.5" step="0.01"
-									value="0.1">
-								<i class="mx-2 fa-solid fa-volume-high"></i>
-
+						<div class="space-y-2">
+							<p class="text-center text-sm">Volume</p>
+							<div class="flex items-center space-x-2">
+								<i class="fa-solid fa-volume-low text-gray-400"></i>
+								<input class="flex-1 h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer slider" type="range" id="volume" min="0" max="1" step="0.01" value="0.1">
+								<i class="fa-solid fa-volume-high text-gray-400"></i>
 							</div>
 						</div>
 					</div>
@@ -93,69 +79,102 @@
 		</div>
 	</aside>
 
-	<div class="p-4 sm:mx-64">
-		<div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-			<div class="grid grid-cols-3 gap-4 mb-4">
-
-				<div class="px-8 flex flex-col items-start justify-center h-24 rounded border-2 border-grey-600 bg-[#1a1a1a]">
-					<h1 class="shake"> Score:<span id="score"></span></h1>
-
-					<button class="" id="reset">Reset
-						<i class="fa-solid fa-rotate-left"></i>
-					</button>
-				</div>
-
-
-				<div class="flex items-center justify-center h-24 rounded border-2 border-grey-600 bg-[#1a1a1a]">
-					<!-- Add this element to display the timer  -->
-					<p id="timer">Time left: <span id="time">60s</span></p>
-				</div>
-				<div class="flex items-center justify-center h-24 rounded border-2 border-grey-600 bg-[#1a1a1a]">
-
-					<p class="text-center" id="message"></p>
-				</div>
-			</div>
-
-			<div class="flex items-center justify-center h-48 mb-4 rounded border-2 border-grey-600 bg-[#1a1a1a]">
-				<div class="message-container flex flex-col justify-center items-center">
-
-					<p>Guess a number between 1 and 10</p>
-					<input class="border-gray-600 rounded-lg max-w-[21rem]" type="number" id="guessInput"
-						placeholder="Enter your guess">
-					<button class=" bg-[#78b95f] hover:bg-gray-500  rounded-lg py-1 px-2 m-4"
-						id="checkGuess">Guess</button>
-					<p id="hint-message"></p>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
-
-	<aside id="default-sidebar" class="fixed top-0 right-0 pl-4 z-40 w-64 h-screen transition-transform -translate-x-full 
-	 sm:translate-x-0" aria-label="history">
-		<div class="h-full px-3 py-4 overflow-y-auto border-2 border-grey-600 bg-[#1a1a1a]">
-			<ul class="space-y-2 font-medium">
-				<li>
-
-					<!-- History -->
-					<div>
-						<p>
-							<i class="fa-solid fa-clock-rotate-left"></i>
-							History
-						</p>
-						<div class="bg-[#78b95f] rounded-lg p-2 " id="history-scores"></div>
+	<!-- Right Sidebar - Game History -->
+	<aside id="history-sidebar" class="fixed top-0 right-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out translate-x-full 
+	 lg:translate-x-0 bg-[#1a1a1a] border-l-2 border-gray-600" aria-label="Game History Sidebar">
+		<div class="h-full px-3 py-4 overflow-y-auto">
+			<div class="space-y-4">
+				<div class="text-center">
+					<h3 class="text-lg font-bold text-[#78b95f] mb-4">
+						<i class="fa-solid fa-clock-rotate-left mr-2"></i>
+						Game History
+					</h3>
+					<div class="space-y-2" id="history-scores">
+						<!-- History items will be populated here -->
 					</div>
-				</li>
-
-			</ul>
+				</div>
+			</div>
 		</div>
 	</aside>
 
-	<!-- audio element for background music  -->
-	<audio id="backgroundMusic" autoplay="true" muted="muted" loop></audio>
+	<!-- Main Content -->
+	<div class="p-4 lg:ml-64 lg:mr-64">
+		<div class="max-w-6xl mx-auto">
+			<!-- Game Stats -->
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+				<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-xl p-6 text-center transition-all duration-300 hover:border-[#78b95f] hover:transform hover:-translate-y-1">
+					<h2 class="text-lg sm:text-xl font-bold mb-2">Score</h2>
+					<p class="text-2xl sm:text-3xl font-bold text-[#78b95f] mb-2" id="score">100</p>
+					<button class="mt-2 px-3 sm:px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors text-sm sm:text-base" id="reset">
+						Reset <i class="fa-solid fa-rotate-left ml-2"></i>
+					</button>
+				</div>
 
+				<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-xl p-6 text-center transition-all duration-300 hover:border-[#78b95f] hover:transform hover:-translate-y-1">
+					<h2 class="text-lg sm:text-xl font-bold mb-2">Time Left</h2>
+					<p class="text-2xl sm:text-3xl font-bold text-[#78b95f]" id="timer">60s</p>
+				</div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+				<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-xl p-6 text-center transition-all duration-300 hover:border-[#78b95f] hover:transform hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+					<h2 class="text-lg sm:text-xl font-bold mb-2">Status</h2>
+					<p class="text-base sm:text-lg" id="message">Ready to play!</p>
+				</div>
+			</div>
+
+			<!-- Game Area -->
+			<div class="bg-[#1a1a1a] border-2 border-gray-600 rounded-2xl p-8 text-center transition-all duration-300 hover:border-[#78b95f]">
+				<div class="max-w-md mx-auto space-y-4 sm:space-y-6">
+					<h1 class="font-['Press_Start_2P'] text-xl sm:text-2xl text-[#78b95f] drop-shadow-lg">Guess the Number!</h1>
+					<p class="text-base sm:text-lg" id="game-instruction">Guess a number between 1 and 10</p>
+					
+					<div class="space-y-3 sm:space-y-4">
+						<input class="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-600 rounded-lg bg-gray-800 text-white text-center text-base sm:text-lg focus:border-[#78b95f] focus:outline-none focus:ring-2 focus:ring-[#78b95f] focus:ring-opacity-20 transition-all duration-300" 
+							type="number" id="guessInput" placeholder="Enter your guess" min="1" max="10">
+						<button class="w-full px-4 sm:px-6 py-2 sm:py-3 bg-[#78b95f] hover:bg-[#6aa84f] text-white text-base sm:text-lg font-bold rounded-lg transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg" 
+							id="checkGuess">Guess!</button>
+					</div>
+					
+					<p class="text-lg text-yellow-400" id="hint-message"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Audio element for background music -->
+	<audio id="backgroundMusic" loop preload="metadata"></audio>
+
+	<!-- Custom sidebar toggle script -->
+	<script>
+		// Sidebar toggle functionality
+		document.addEventListener('DOMContentLoaded', function() {
+			const toggleSettings = document.getElementById('toggle-settings');
+			const toggleHistory = document.getElementById('toggle-history');
+			const settingsSidebar = document.getElementById('settings-sidebar');
+			const historySidebar = document.getElementById('history-sidebar');
+
+			// Toggle settings sidebar
+			toggleSettings.addEventListener('click', function() {
+				settingsSidebar.classList.toggle('-translate-x-full');
+			});
+
+			// Toggle history sidebar
+			toggleHistory.addEventListener('click', function() {
+				historySidebar.classList.toggle('translate-x-full');
+			});
+
+			// Close sidebars when clicking outside (mobile only)
+			document.addEventListener('click', function(event) {
+				if (window.innerWidth < 1024) {
+					if (!settingsSidebar.contains(event.target) && !toggleSettings.contains(event.target)) {
+						settingsSidebar.classList.add('-translate-x-full');
+					}
+					if (!historySidebar.contains(event.target) && !toggleHistory.contains(event.target)) {
+						historySidebar.classList.add('translate-x-full');
+					}
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>
