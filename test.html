@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NumQuest Test</title>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: white; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #333; border-radius: 8px; }
+        button { padding: 10px 20px; margin: 5px; background: #78b95f; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #333; background: #333; color: white; }
+        .log { background: #000; padding: 10px; border-radius: 4px; font-family: monospace; max-height: 300px; overflow-y: auto; }
+        .success { color: #78b95f; }
+        .error { color: #ff6b6b; }
+        .info { color: #4ecdc4; }
+    </style>
+</head>
+<body>
+    <h1>🔧 NumQuest Connection Test</h1>
+    
+    <div class="test-section">
+        <h3>📡 Socket.IO Connection Test</h3>
+        <button onclick="testConnection()">Test Connection</button>
+        <button onclick="disconnect()">Disconnect</button>
+        <div id="connection-status">Not connected</div>
+    </div>
+
+    <div class="test-section">
+        <h3>👤 Player Join Test</h3>
+        <input type="text" id="test-username" placeholder="Username" value="TestUser">
+        <select id="test-avatar">
+            <option value="👤">👤 Player</option>
+            <option value="🎮">🎮 Gamer</option>
+            <option value="🚀">🚀 Rocket</option>
+        </select>
+        <button onclick="testPlayerJoin()">Test Player Join</button>
+        <div id="player-status">No player data</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🏠 Room Creation Test</h3>
+        <button onclick="testCreateRoom()">Test Create Room</button>
+        <div id="room-status">No room data</div>
+    </div>
+
+    <div class="test-section">
+        <h3>📋 Console Log</h3>
+        <button onclick="clearLog()">Clear Log</button>
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        let socket = null;
+        let player = null;
+        let currentRoom = null;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = type;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testConnection() {
+            log('🔌 Testing Socket.IO connection...', 'info');
+            
+            try {
+                socket = io('http://localhost:3000', {
+                    transports: ['websocket', 'polling'],
+                    timeout: 10000
+                });
+
+                socket.on('connect', () => {
+                    log('✅ Connected to server!', 'success');
+                    document.getElementById('connection-status').textContent = 'Connected';
+                    document.getElementById('connection-status').className = 'success';
+                });
+
+                socket.on('connect_error', (error) => {
+                    log(`❌ Connection error: ${error.message}`, 'error');
+                    document.getElementById('connection-status').textContent = `Error: ${error.message}`;
+                    document.getElementById('connection-status').className = 'error';
+                });
+
+                socket.on('disconnect', (reason) => {
+                    log(`❌ Disconnected: ${reason}`, 'error');
+                    document.getElementById('connection-status').textContent = 'Disconnected';
+                    document.getElementById('connection-status').className = 'error';
+                });
+
+                socket.on('player_joined', (playerData) => {
+                    log(`👤 Player joined: ${JSON.stringify(playerData)}`, 'success');
+                    player = playerData;
+                    document.getElementById('player-status').textContent = `Player: ${playerData.username}`;
+                });
+
+                socket.on('room_created', (room) => {
+                    log(`🏠 Room created: ${JSON.stringify(room)}`, 'success');
+                    currentRoom = room;
+                    document.getElementById('room-status').textContent = `Room: ${room.id}`;
+                });
+
+                socket.on('error', (error) => {
+                    log(`❌ Server error: ${error.message}`, 'error');
+                });
+
+            } catch (error) {
+                log(`❌ Failed to initialize Socket.IO: ${error.message}`, 'error');
+            }
+        }
+
+        function disconnect() {
+            if (socket) {
+                socket.disconnect();
+                log('🔌 Disconnected from server', 'info');
+                document.getElementById('connection-status').textContent = 'Disconnected';
+                document.getElementById('connection-status').className = 'error';
+            }
+        }
+
+        function testPlayerJoin() {
+            if (!socket || !socket.connected) {
+                log('❌ Not connected to server', 'error');
+                return;
+            }
+
+            const username = document.getElementById('test-username').value.trim();
+            const avatar = document.getElementById('test-avatar').value;
+
+            if (!username) {
+                log('❌ Please enter a username', 'error');
+                return;
+            }
+
+            log(`👤 Joining as ${username} with avatar ${avatar}`, 'info');
+            socket.emit('player_join', { username, avatar });
+        }
+
+        function testCreateRoom() {
+            if (!socket || !socket.connected) {
+                log('❌ Not connected to server', 'error');
+                return;
+            }
+
+            if (!player) {
+                log('❌ Must join as player first', 'error');
+                return;
+            }
+
+            log('🏠 Creating test room...', 'info');
+            socket.emit('create_room', { 
+                mode: 'competitive',
+                settings: {
+                    maxRounds: 3,
+                    timeLimit: 60,
+                    numberRange: { min: 1, max: 100 }
+                }
+            });
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Auto-test connection on page load
+        window.addEventListener('load', () => {
+            log('🚀 Page loaded, ready for testing', 'info');
+        });
+    </script>
+</body>
+</html>

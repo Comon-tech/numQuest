@@ -16,6 +16,14 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
+# Check if port 3000 is already in use
+if lsof -ti:3000 &> /dev/null; then
+    echo "⚠️  Port 3000 is already in use. Attempting to free it..."
+    lsof -ti:3000 | xargs kill -9
+    sleep 2
+    echo "✅ Port 3000 freed successfully!"
+fi
+
 # Install dependencies if node_modules doesn't exist
 if [ ! -d "node_modules" ]; then
     echo "📦 Installing dependencies..."

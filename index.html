@@ -238,30 +238,95 @@
 
 	<!-- Initialize Multiplayer -->
 	<script type="module">
-		import { MultiplayerManager } from './resources/js/multiplayer.js';
+		console.log('🚀 Initializing NumQuest multiplayer...');
 		
-		document.addEventListener('DOMContentLoaded', function() {
-			window.multiplayerManager = new MultiplayerManager();
-			
-			// Setup guess submission
-			const submitGuessBtn = document.getElementById('submit-guess-btn');
-			const guessInput = document.getElementById('multiplayer-guess-input');
-			
-			if (submitGuessBtn && guessInput) {
-				submitGuessBtn.addEventListener('click', () => {
-					const guess = parseInt(guessInput.value);
-					if (guess && window.multiplayerManager) {
-						window.multiplayerManager.submitGuess(guess);
-						guessInput.value = '';
+		try {
+			import('./resources/js/multiplayer.js').then(({ MultiplayerManager }) => {
+				console.log('✅ MultiplayerManager imported successfully');
+				
+				document.addEventListener('DOMContentLoaded', function() {
+					console.log('📄 DOM loaded, creating MultiplayerManager...');
+					
+					try {
+						window.multiplayerManager = new MultiplayerManager();
+						console.log('✅ MultiplayerManager created successfully');
+						
+						// Setup guess submission
+						const submitGuessBtn = document.getElementById('submit-guess-btn');
+						const guessInput = document.getElementById('multiplayer-guess-input');
+						
+						if (submitGuessBtn && guessInput) {
+							console.log('✅ Found guess submission elements');
+							submitGuessBtn.addEventListener('click', () => {
+								const guess = parseInt(guessInput.value);
+								if (guess && window.multiplayerManager) {
+									window.multiplayerManager.submitGuess(guess);
+									guessInput.value = '';
+								}
+							});
+							
+							guessInput.addEventListener('keypress', (e) => {
+								if (e.key === 'Enter') {
+									submitGuessBtn.click();
+								}
+							});
+						} else {
+							console.log('ℹ️ Guess submission elements not found (not in game area yet)');
+						}
+						
+						// Test the join form
+						const joinForm = document.getElementById('player-join-form');
+						if (joinForm) {
+							console.log('✅ Found player join form');
+							joinForm.addEventListener('submit', (e) => {
+								e.preventDefault();
+								console.log('📝 Form submitted via event listener');
+								
+								// Test if the form elements exist
+								const usernameInput = document.getElementById('username-input');
+								const avatarSelect = document.getElementById('avatar-select');
+								
+								console.log('👤 Username input:', usernameInput);
+								console.log('🎭 Avatar select:', avatarSelect);
+								
+								if (usernameInput && avatarSelect) {
+									console.log('✅ Form elements found, username:', usernameInput.value, 'avatar:', avatarSelect.value);
+								} else {
+									console.error('❌ Form elements not found');
+								}
+								
+								// Try to call joinGame
+								if (window.multiplayerManager && window.multiplayerManager.joinGame) {
+									console.log('🎮 Calling joinGame method...');
+									window.multiplayerManager.joinGame();
+								} else {
+									console.error('❌ MultiplayerManager or joinGame method not found');
+								}
+							});
+						} else {
+							console.error('❌ Player join form not found');
+						}
+						
+					} catch (error) {
+						console.error('❌ Error creating MultiplayerManager:', error);
 					}
 				});
 				
-				guessInput.addEventListener('keypress', (e) => {
-					if (e.key === 'Enter') {
-						submitGuessBtn.click();
-					}
-				});
-			}
+			}).catch((error) => {
+				console.error('❌ Failed to import MultiplayerManager:', error);
+			});
+			
+		} catch (error) {
+			console.error('❌ Error in module initialization:', error);
+		}
+		
+		// Additional debugging
+		window.addEventListener('error', (event) => {
+			console.error('❌ Global error:', event.error);
+		});
+		
+		window.addEventListener('unhandledrejection', (event) => {
+			console.error('❌ Unhandled promise rejection:', event.reason);
 		});
 	</script>
 </body>
